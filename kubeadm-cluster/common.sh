@@ -106,8 +106,26 @@ sudo apt-get install -y kubelet="$KUBERNETES_VERSION" kubectl="$KUBERNETES_VERSI
 sudo apt-get update -y
 sudo apt-get install -y jq
 
-# Get the local IP address
-local_ip="$(ip --json addr show eth0 | jq -r '.[0].addr_info[] | select(.family == "inet") | .local')"
+# Check if the 'eth0' network interface exists
+if ip link show eth0 > /dev/null 2>&1; then
+    # 'eth0' exists, so we retrieve its IP address.
+    # The 'ip --json addr show eth0' command outputs details of the 'eth0' interface in JSON format.
+    # 'jq' is used to parse the JSON and extract the IPv4 ('inet') address.
+    local_ip="$(ip --json addr show eth0 | jq -r '.[0].addr_info[] | select(.family == "inet") | .local')"
+
+# If 'eth0' does not exist, check for the 'ens5' network interface
+elif ip link show ens5 > /dev/null 2>&1; then
+    # 'ens5' exists, so we retrieve its IP address with the same method as above.
+    local_ip="$(ip --json addr show ens5 | jq -r '.[0].addr_info[] | select(.family == "inet") | .local')"
+
+# If neither 'eth0' nor 'ens5' are found, output an error message and exit the script.
+else
+    echo "Neither eth0 nor ens5 interface found."
+    exit 1
+fi
+
+# Display the retrieved local IP address
+echo "Local IP: $local_ip"
 
 # Configure kubelet to use the local IP address
 cat > /etc/default/kubelet << EOF
