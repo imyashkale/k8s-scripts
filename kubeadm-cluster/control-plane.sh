@@ -25,7 +25,8 @@ if [[ "$PUBLIC_IP_ACCESS" == "false" ]]; then
                       --apiserver-cert-extra-sans="$MASTER_PRIVATE_IP" \
                       --pod-network-cidr="$POD_CIDR" \
                       --node-name "$NODENAME" \
-                      --ignore-preflight-errors Swap
+                      --ignore-preflight-errors Swap \
+                      --v=5
 elif [[ "$PUBLIC_IP_ACCESS" == "true" ]]; then
     # Use public IP for the Kubernetes API server.
     MASTER_PUBLIC_IP=$(curl ifconfig.me && echo "")
@@ -33,7 +34,8 @@ elif [[ "$PUBLIC_IP_ACCESS" == "true" ]]; then
                       --apiserver-cert-extra-sans="$MASTER_PUBLIC_IP" \
                       --pod-network-cidr="$POD_CIDR" \
                       --node-name "$NODENAME" \
-                      --ignore-preflight-errors Swap
+                      --ignore-preflight-errors Swap \
+                      --v=5
 else
     echo "Error: Invalid value for MASTER_PUBLIC_IP: $PUBLIC_IP_ACCESS"
     exit 1
