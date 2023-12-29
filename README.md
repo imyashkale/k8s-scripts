@@ -4,6 +4,8 @@ This repository contains straightforward scripts aimed at easing the setup of Ku
 
 ## Referenced
 
-The primary script for setting up the Kubernetes control plane is based on the methodology outlined in the guide from [DevOpsCube - Setup Kubernetes Cluster with Kubeadm.](https://devopscube.com/setup-kubernetes-cluster-kubeadm)
+The primary script for setting up the Kubernetes control plane is based on the methodology outlined in the guide from DevOpsCube.
+
+[Setup Kubernetes Cluster with Kubeadm.](https://devopscube.com/setup-kubernetes-cluster-kubeadm)
 
 [DevOpsCube - GitHub Repo](https://github.com/techiescamp/kubeadm-scripts)
